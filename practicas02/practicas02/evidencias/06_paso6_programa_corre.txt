@@ -1,0 +1,4 @@
+Salida B: el programa SÍ se ejecuta sin verificar tipos
+MULTA_POR_DIA = "5" | typeof = string
+multa calculada = 45 | typeof multa = number
+(Con * JS convierte el texto a número; con + concatenaría:  95 )

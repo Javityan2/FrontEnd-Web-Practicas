@@ -1,0 +1,3 @@
+﻿PRÉSTAMO EXITOSO
+Préstamo realizado. Folio: P-0001, socio: Ana Pérez, vence: 2026-09-22
+Disponibles de L-003: 0/1

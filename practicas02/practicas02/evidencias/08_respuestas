@@ -1,0 +1,9 @@
+¿por qué una unión de valores y no una enumeración?
+La unión no genera JS, exige literales exactos y un 'ACTIVO' no compila; el readonly tampoco llega al .js.
+
+¿qué se gana con el tipo desconocido en lugar del que acepta todo?
+Con any una propiedad inventada pasa el typecheck; con unknown obligas a validar (aduana).
+
+¿por qué la fecha entra como parámetro?
+Para que se pueda pasar una fecha arbitraria, no solo la actual.
+Las reglas quedan comprobables con cualquier “hoy” fijo, sin depender del reloj real.

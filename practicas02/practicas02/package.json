@@ -1,0 +1,25 @@
+{
+  "name": "practicas02",
+  "version": "1.0.0",
+  "description": "Practica 02 - Mostrador de biblioteca con TypeScript",
+  "main": "dist/main.js",
+  "scripts": {
+    "correr": "tsc && node dist/main.js",
+    "revisar": "tsc --noEmit",
+    "construir": "tsc",
+    "iniciar": "node dist/main.js"
+  },
+  "keywords": [],
+  "author": "Javityan",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.0",
+    "@types/prompts": "^2.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

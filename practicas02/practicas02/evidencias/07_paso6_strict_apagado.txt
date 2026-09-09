@@ -1,0 +1,15 @@
+Con strict: true 
+
+> practicas02@1.0.0 revisar
+> tsc --noEmit
+
+src/demo-strict.ts(2,25): error TS7006: Parameter 'x' implicitly has an 'any' type.
+src/demo-strict.ts(6,10): error TS18047: 'a' is possibly 'null'.
+
+=== Con strict: false ===
+
+> practicas02@1.0.0 revisar
+> tsc --noEmit
+
+
+Resumen: con strict true -> 2 error(es); con strict false -> 0 error(es). Se fueron 2 error(es).

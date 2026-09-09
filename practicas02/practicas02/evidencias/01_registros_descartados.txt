@@ -1,0 +1,5 @@
+﻿REGISTRO DESCARTADO
+Se cargaron 9 libros. Se descartaron 2 entradas inválidas.
+Registros mal formados en datos/catalogo.json:
+  - L-010: ejemplares es el texto "dos" (debe ser number)
+  - id 11: el identificador es número, no string
