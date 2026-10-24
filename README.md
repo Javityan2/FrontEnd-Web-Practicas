@@ -10,6 +10,10 @@
 
 [Ver código, respuestas y evidencias](practica03/README.md)
 
+## Práctica 04 — De la capa de dominio a una API HTTP
+
+[Ver código, respuestas y evidencias](practica04/README.md)
+
 ## Práctica 05
 
 [Ver código, respuestas y evidencias](practica05/README.md)
