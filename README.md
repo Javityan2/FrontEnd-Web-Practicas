@@ -5,3 +5,7 @@
 ## Práctica 02
 
 [Ver código, respuestas y evidencias](practica02/README.md)
+
+## Práctica 05
+
+[Ver código, respuestas y evidencias](practica05/README.md)
