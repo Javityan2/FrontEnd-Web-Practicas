@@ -1,0 +1,23 @@
+{
+  "name": "practica3-capa-dominio",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Practica 3 - La capa de dominio con genericos y patrones",
+  "scripts": {
+    "servidor": "tsc && node dist/http/server.js",
+    "dev": "tsx src/main.ts",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "test": "tsx --test test/prestamo.service.test.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^6.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
