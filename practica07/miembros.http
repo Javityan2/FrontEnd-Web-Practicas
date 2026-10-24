@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+
+### 1. Listar: 200
+GET {{baseUrl}}/miembros
+
+### 2. Buscar por ID: 200
+GET {{baseUrl}}/miembros/1
+
+### 3. Crear: 201
+POST {{baseUrl}}/miembros
+Content-Type: application/json
+
+{
+  "nombre": "Karlo",
+  "correo": "karlo@example.com",
+  "membresia": "basica"
+}
+
+### 4. Actualizar parcialmente: 200
+PATCH {{baseUrl}}/miembros/1
+Content-Type: application/json
+
+{
+  "membresia": "plus",
+  "activo": false
+}
+
+### 5. Eliminar: 204
+DELETE {{baseUrl}}/miembros/3
+
+### 6. Confirmar eliminación: 404
+GET {{baseUrl}}/miembros/3

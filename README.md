@@ -21,3 +21,7 @@
 ## Práctica 06 — Conectar el dominio con la API
 
 [Ver código, respuestas y evidencias](practica06/README.md)
+
+## Práctica 07 — Construir el módulo Miembros
+
+[Ver código, respuestas y evidencias](practica07/README.md)

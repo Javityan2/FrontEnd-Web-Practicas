@@ -1,0 +1,79 @@
+@baseUrl = http://localhost:3000
+
+### 1. Consultar inscripciones
+GET {{baseUrl}}/inscripciones
+
+### 2. Primera inscripción: 201 y Location
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 1
+}
+
+### 3. Inscripción duplicada: 409
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 1
+}
+
+### 4. Ocupar el segundo lugar: 201
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 2
+}
+
+### 5. Cupo lleno: 409
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 3
+}
+
+### 6. Cancelar la inscripción 1: 200
+PATCH {{baseUrl}}/inscripciones/1/cancelar
+
+### 7. Reintentar después de cancelar: 201
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 3
+}
+
+### 8. Cuerpo incompleto: 400
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{}
+
+### 9. Horario inexistente: 404
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 999,
+  "miembroId": 1
+}
+
+### 10. Miembro inexistente: 404
+POST {{baseUrl}}/inscripciones
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 999
+}
+
+### 11. Inscripción inexistente: 404
+PATCH {{baseUrl}}/inscripciones/999/cancelar
