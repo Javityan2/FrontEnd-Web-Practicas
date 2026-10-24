@@ -1,0 +1,16 @@
+### 1. Probar la ruta raíz (El Hello World)
+GET http://localhost:3000
+
+
+### 2. Probar obtener todas las clases
+GET http://localhost:3000/clases
+
+
+### 3. Crear una nueva clase (POST)
+POST http://localhost:3000/clases
+Content-Type: application/json
+
+{
+  "id": 6,
+  "nombre": "Meditación"
+}
