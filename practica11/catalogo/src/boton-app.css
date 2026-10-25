@@ -1,0 +1,44 @@
+/* Estilos internos del componente boton-app. */
+
+/* :host es la etiqueta <boton-app> misma, vista desde adentro. */
+:host {
+  display: inline-block;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: filter .15s ease, transform .15s ease;
+}
+
+button:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+button:focus-visible { outline: 3px solid var(--color-cian, #00aeef); outline-offset: 2px; }
+
+/* Las variantes: el componente cambia de aspecto según un atributo. */
+.primario {
+  background: var(--color-azul, #0066cc);
+  color: #fff;
+}
+
+.secundario {
+  background: #fff;
+  color: var(--color-azul, #0066cc);
+  border-color: var(--color-azul, #0066cc);
+}
+
+.peligro {
+  background: var(--color-rojo, #ff4757);
+  color: #fff;
+}
+
+button:disabled {
+  background: var(--color-linea, #e5e7eb);
+  color: var(--color-tenue, #6b7280);
+  border-color: transparent;
+  cursor: not-allowed;
+}

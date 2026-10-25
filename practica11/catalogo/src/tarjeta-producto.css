@@ -1,0 +1,69 @@
+/* ==========================================================================
+   tarjeta-producto.css — los estilos del componente <tarjeta-producto>.
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border: 1px solid var(--color-linea, #e5e7eb);
+  border-radius: var(--radio, 12px);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, .08);
+}
+
+img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-fondo, #f7f8fc);
+}
+
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  padding: 16px;
+}
+
+h3 {
+  margin: 0;
+  font-size: 17px;
+  color: var(--color-tinta, #111827);
+}
+
+.precio {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-azul, #0066cc);
+}
+
+.existencia {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-verde, #2e9e5b);
+}
+
+/* Cuando no hay piezas, el texto se pinta en rojo. */
+.existencia.agotado {
+  color: var(--color-rojo, #ff4757);
+  font-weight: 600;
+}
+
+/* Empuja el botón al fondo de la tarjeta, aunque el nombre sea largo. */
+boton-app {
+  margin-top: auto;
+}

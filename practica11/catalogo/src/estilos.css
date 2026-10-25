@@ -1,0 +1,77 @@
+/* Estilos generales de la página. Los componentes incluyen su propio CSS. */
+
+:root {
+  --color-cian:   #00aeef;
+  --color-azul:   #0066cc;
+  --color-morado: #8c52ff;
+  --color-rojo:   #ff4757;
+  --color-verde:  #2e9e5b;
+  --color-tinta:  #111827;
+  --color-texto:  #374151;
+  --color-tenue:  #6b7280;
+  --color-linea:  #e5e7eb;
+  --color-fondo:  #f7f8fc;
+  --radio:        12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Barlow", "Segoe UI", system-ui, sans-serif;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+}
+
+h1 { margin: 0; color: var(--color-tinta); font-size: 32px; }
+p  { margin: 0; }
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #fff;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.encabezado__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-tinta);
+}
+
+.encabezado__carrito {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.portada { margin-bottom: 24px; }
+.portada p { margin-top: 6px; color: var(--color-tenue); }
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.tarea {
+  display: grid;
+  gap: 22px;
+  margin-top: 40px;
+}
+
+@media (max-width: 640px) {
+  .encabezado { padding: 12px 16px; }
+  .contenido  { padding: 20px 16px; }
+}
