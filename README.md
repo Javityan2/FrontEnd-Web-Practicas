@@ -25,3 +25,7 @@
 ## Práctica 07 — Construir el módulo Miembros
 
 [Ver código, respuestas y evidencias](practica07/README.md)
+
+## Práctica 08 — Prisma: esquema y migraciones
+
+[Ver código, respuestas y evidencias](practica08/README.md)
