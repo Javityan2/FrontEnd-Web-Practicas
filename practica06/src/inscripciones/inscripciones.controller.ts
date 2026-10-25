@@ -7,7 +7,7 @@ import {
     NotFoundException,
     Param,
     ParseIntPipe,
-    Patch,
+    Delete,
     Post,
     Res,
   } from '@nestjs/common';
@@ -33,7 +33,22 @@ import {
       return inscripciones.map(aInscripcionDto);
     }
   
-    @Post()
+    @Get(':id')
+  async buscar(@Param('id', ParseIntPipe) id: number) {
+    if (id <= 0) {
+      throw new BadRequestException('El id debe ser positivo');
+    }
+
+    const inscripcion = await this.inscripcionesService.buscar(id);
+
+    if (!inscripcion) {
+      throw new NotFoundException(`No existe la inscripción ${id}`);
+    }
+
+    return aInscripcionDto(inscripcion);
+  }
+
+  @Post()
     async crear(
       @Body() cuerpo: unknown,
       @Res({ passthrough: true }) respuesta: Response,
@@ -84,7 +99,7 @@ import {
       }
     }
   
-    @Patch(':id/cancelar')
+    @Delete(':id')
     async cancelar(@Param('id', ParseIntPipe) id: number) {
       if (id <= 0) {
         throw new BadRequestException('El id debe ser positivo');

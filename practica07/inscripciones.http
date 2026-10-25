@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ### 6. Cancelar la inscripción 1: 200
-PATCH {{baseUrl}}/inscripciones/1/cancelar
+DELETE {{baseUrl}}/inscripciones/1
 
 ### 7. Reintentar después de cancelar: 201
 POST {{baseUrl}}/inscripciones
@@ -76,4 +76,9 @@ Content-Type: application/json
 }
 
 ### 11. Inscripción inexistente: 404
-PATCH {{baseUrl}}/inscripciones/999/cancelar
+DELETE {{baseUrl}}/inscripciones/999
+### 12. Buscar una inscripción existente: 200
+GET {{baseUrl}}/inscripciones/1
+
+### 13. Buscar una inscripción inexistente: 404
+GET {{baseUrl}}/inscripciones/999

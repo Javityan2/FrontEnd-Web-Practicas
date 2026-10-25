@@ -110,7 +110,8 @@ Los errores del dominio no contienen códigos HTTP. El controlador realiza su tr
 | POST | `/clases` | Crear una clase |
 | GET | `/inscripciones` | Consultar inscripciones |
 | POST | `/inscripciones` | Crear una inscripción |
-| PATCH | `/inscripciones/:id/cancelar` | Cancelar una inscripción |
+| GET | `/inscripciones/:id` | Buscar una inscripción |
+| DELETE | `/inscripciones/:id` | Cancelar una inscripción |
 
 ## Códigos de respuesta
 
@@ -226,7 +227,7 @@ Después de cancelar la inscripción 1, quedó un lugar disponible. Al repetir l
 ![409 por cupo lleno](evidencias/08-cupo-lleno-409.png)
 
 ### Cancelación
-![Inscripción cancelada](evidencias/09-cancelacion.png)
+![Inscripción cancelada mediante DELETE](evidencias/09-cancelacion.png)
 
 ### Reintento después de cancelar
 ![201 después de liberar cupo](evidencias/10-inscripcion-tras-cancelar.png)
@@ -239,3 +240,12 @@ Después de cancelar la inscripción 1, quedó un lugar disponible. Al repetir l
 
 ### Verificación final
 ![Revisión de tipos, compilación y pruebas](evidencias/13-verificacion-final.png)
+## Consulta y cancelación de inscripciones
+
+`GET /inscripciones/:id` devuelve el DTO de una inscripción o 404 si no existe. `DELETE /inscripciones/:id` cancela la inscripción y devuelve 200 con su estado `cancelada`; no elimina el registro. Los identificadores no enteros o no positivos responden 400.
+
+Las pruebas HTTP automatizadas verifican búsqueda, Location, duplicados, cupo, cancelación, liberación de cupo e identificadores inválidos. Se ejecutan con:
+
+```powershell
+npm run test:e2e -- --runInBand
+```

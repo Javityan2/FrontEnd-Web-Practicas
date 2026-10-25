@@ -185,3 +185,15 @@ Estas comprobaciones aportan evidencia sobre los comportamientos probados, aunqu
 
 ### Verificación final
 ![Tipos, compilación, pruebas y auditoría](evidencias/07-verificacion-final.png)
+## Consulta y cancelación de inscripciones
+
+`GET /inscripciones/:id` devuelve el DTO de una inscripción o 404 si no existe. `DELETE /inscripciones/:id` cancela la inscripción y devuelve 200 con su estado `cancelada`; no elimina el registro. Los identificadores no enteros o no positivos responden 400.
+
+Las pruebas HTTP automatizadas verifican búsqueda, Location, duplicados, cupo, cancelación, liberación de cupo e identificadores inválidos. Se ejecutan con:
+
+```powershell
+npm run test:e2e -- --runInBand
+```
+
+### Consulta y cancelación de inscripciones
+![Creación con 201, consulta con 200 y cancelación mediante DELETE con 200](evidencias/08-consulta-cancelacion-inscripcion.png)

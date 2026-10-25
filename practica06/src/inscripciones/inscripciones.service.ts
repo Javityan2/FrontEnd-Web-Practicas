@@ -21,6 +21,10 @@ export class InscripcionesService {
     return this.repo.listar();
   }
 
+  buscar(id: number): Promise<Inscripcion | null> {
+    return this.repo.buscarPorId(id);
+  }
+
   async crear(dto: CrearInscripcionDto): Promise<Inscripcion> {
     const horario = await this.repo.buscarHorario(dto.horarioId);
 
