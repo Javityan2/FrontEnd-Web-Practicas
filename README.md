@@ -33,3 +33,20 @@
 ## Práctica 09 — Blindar la API
 
 [Ver código, respuestas y evidencias](practica09/README.md)
+
+## Práctica 10 — Blindar la API, JWT y OpenAPI
+
+[Ver código, respuestas y evidencias](practica10/README.md)
+
+## Práctica 11 — Componentes con TypeScript puro
+
+[Ver código, respuestas y evidencias](practica11/README.md)
+
+## Práctica 12 — Hola React
+
+[Ver código, respuestas y evidencias](practica12/README.md)
+
+## Práctica 13 — La tienda: composición, eventos y estado
+
+[Ver código, respuestas y evidencias](practica13/README.md)
+
