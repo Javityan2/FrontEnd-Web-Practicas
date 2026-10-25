@@ -1,0 +1,116 @@
+# Práctica 10 — Autenticación, JWT y permisos
+# Ejecutar con REST Client y el servidor iniciado.
+# Las cuentas de prueba deben existir en MySQL.
+# Ejecutar los login antes de las consultas con token.
+
+@host = http://localhost:3000
+
+### 1. Catálogo público — 200, respuesta con data y meta
+GET {{host}}/clases
+X-Request-Id: prueba-practica10-001
+
+### 2. Inscripciones sin token — 401
+GET {{host}}/inscripciones
+
+### 3. Login de miembro — 200
+# @name loginMiembro
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "correo": "karla@itson.mx",
+  "password": "gimnasio2026"
+}
+
+### 4. Identidad del miembro — 200
+GET {{host}}/auth/yo
+Authorization: Bearer {{loginMiembro.response.body.$.data.access_token}}
+
+### 5. Inscribir a otro miembro — 403
+POST {{host}}/inscripciones
+Authorization: Bearer {{loginMiembro.response.body.$.data.access_token}}
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 3
+}
+
+### 6. Cancelación como miembro — 403
+DELETE {{host}}/inscripciones/1
+Authorization: Bearer {{loginMiembro.response.body.$.data.access_token}}
+
+### 7. Login de entrenador — 200
+# @name loginEntrenador
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "correo": "ana@itson.mx",
+  "password": "gimnasio2026"
+}
+
+### 8. Identidad del entrenador — 200
+GET {{host}}/auth/yo
+Authorization: Bearer {{loginEntrenador.response.body.$.data.access_token}}
+
+### 9. Identificador inválido — 400
+DELETE {{host}}/inscripciones/hola
+Authorization: Bearer {{loginEntrenador.response.body.$.data.access_token}}
+
+### 10. Origen permitido — incluye Access-Control-Allow-Origin
+GET {{host}}/clases
+Origin: http://localhost:5173
+
+### 11. Origen no permitido — sin Access-Control-Allow-Origin
+GET {{host}}/clases
+Origin: http://localhost:9999
+
+### 12. Inscripción propia — 201
+# Requiere disponibilidad en el horario 1.
+# @name inscripcionPropia
+POST {{host}}/inscripciones
+Authorization: Bearer {{loginMiembro.response.body.$.data.access_token}}
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 1
+}
+
+### 13. Repetir la inscripción — 409
+POST {{host}}/inscripciones
+Authorization: Bearer {{loginMiembro.response.body.$.data.access_token}}
+Content-Type: application/json
+
+{
+  "horarioId": 1,
+  "miembroId": 1
+}
+
+### 14. Cancelar como entrenador — 200, estado cancelada
+DELETE {{host}}/inscripciones/{{inscripcionPropia.response.body.$.data.id}}
+Authorization: Bearer {{loginEntrenador.response.body.$.data.access_token}}
+
+### 15. Consultar la inscripción cancelada — 200
+GET {{host}}/inscripciones/{{inscripcionPropia.response.body.$.data.id}}
+Authorization: Bearer {{loginEntrenador.response.body.$.data.access_token}}
+
+### 16. Credenciales incorrectas — 401
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "correo": "karla@itson.mx",
+  "password": "contrasena-incorrecta"
+}
+
+### 17. Cuerpo inválido — 400
+POST {{host}}/inscripciones
+Authorization: Bearer {{loginEntrenador.response.body.$.data.access_token}}
+Content-Type: application/json
+
+{
+  "horarioId": "hola",
+  "miembroId": 1
+}

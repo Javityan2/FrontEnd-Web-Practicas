@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  // Prisma 7 ya no genera dentro de node_modules: el cliente es
+  // codigo tuyo, en tu carpeta, y por eso `output` es obligatorio.
+  provider     = "prisma-client"
+
+  // OJO: la ruta es relativa a ESTE archivo (prisma/schema.prisma),
+  // no a la raiz del proyecto. "../src/..." sube un nivel y entra a
+  // src. El `prisma init` lo deja en "../generated/prisma", que cae
+  // FUERA de src/ y en ingles; si se queda asi, el import de
+  // PrismaService no resuelve y truena hasta el Paso 7 con
+  // "Cannot find module".
+  output       = "../src/generado/prisma"
+
+  // NestJS compila a CommonJS. Sin esta linea el cliente sale en
+  // formato ESM y Nest no lo puede cargar al arrancar.
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Clase {
+  id          Int     @id @default(autoincrement())
+  nombre      String  @db.VarChar(80)
+  // Se agrega en la segunda migracion de esta practica: opcional, de
+  // texto. No la usa (todavia) ningun DTO ni Service.
+  descripcion String? @db.VarChar(255)
+
+  horarios Horario[]
+
+  @@map("clases")
+}
+
+model Horario {
+  id         Int    @id @default(autoincrement())
+  claseId    Int
+  dia        String @db.VarChar(20)
+  horaInicio String @db.VarChar(5)
+  cupoMaximo Int
+  entrenador String @db.VarChar(80)
+
+  // Este lado SI crea columna (claseId): lleva @relation.
+  clase         Clase         @relation(fields: [claseId], references: [id], onDelete: Cascade)
+  inscripciones Inscripcion[]
+
+  @@index([claseId])
+  @@map("horarios")
+}
+
+model Miembro {
+  id        Int     @id @default(autoincrement())
+  nombre    String  @db.VarChar(120)
+  correo    String  @unique @db.VarChar(160)
+  membresia String  @db.VarChar(20)
+  activo    Boolean @default(true)
+
+  inscripciones Inscripcion[]
+
+  @@map("miembros")
+}
+
+enum EstadoInscripcion {
+  confirmada
+  cancelada
+}
+
+model Inscripcion {
+  id        Int               @id @default(autoincrement())
+  horarioId Int
+  miembroId Int
+  estado    EstadoInscripcion @default(confirmada)
+  creadaEn  DateTime          @default(now())
+
+  horario Horario @relation(fields: [horarioId], references: [id], onDelete: Cascade)
+  miembro Miembro @relation(fields: [miembroId], references: [id], onDelete: Cascade)
+
+  // La Regla 1 del gimnasio (no duplicada), ahora tambien en la base
+  // de datos. La relacion N-M entre Miembro y Horario no se declaro
+  // en ningun lado: sale sola de que Inscripcion tenga dos relaciones 1-N.
+  @@unique([horarioId, miembroId])
+  @@index([miembroId])
+  @@map("inscripciones")
+}
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  correo       String   @unique @db.VarChar(160)
+  passwordHash String   @db.VarChar(255)
+  rol          String   @default("miembro") @db.VarChar(20)
+  miembroId    Int?
+  creadoEn     DateTime @default(now())
+
+  @@map("usuarios")
+}
