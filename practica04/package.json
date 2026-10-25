@@ -1,14 +1,14 @@
 {
-  "name": "practica3-capa-dominio",
+  "name": "practica04-api-http",
   "version": "1.0.0",
   "type": "module",
-  "description": "Practica 3 - La capa de dominio con genericos y patrones",
+  "description": "Practica 4 - De la capa de dominio a una API HTTP",
   "scripts": {
     "servidor": "tsc && node dist/http/servidor.js",
-    "dev": "tsx src/main.ts",
+    "dev": "tsx src/http/servidor.ts",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json",
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "node dist/http/servidor.js",
     "test": "tsx --test test/prestamo.service.test.ts"
   },
   "devDependencies": {

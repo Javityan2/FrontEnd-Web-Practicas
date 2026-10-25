@@ -1,0 +1,46 @@
+# Práctica 4 - Peticiones de prueba
+# Ejecutar con REST Client de VS Code, mediante Send Request.
+# Antes de comenzar: npm run dev
+# Reiniciar el servidor para comenzar con los préstamos vacíos.
+
+### 1. Listar préstamos del libro (vacío al inicio) -> 200 []
+GET http://localhost:3000/api/prestamos?libroId=LIB-0417
+
+### 2. Crear un préstamo -> 201 Created + cabecera Location
+POST http://localhost:3000/api/prestamos
+Content-Type: application/json
+
+{
+  "libroId": "LIB-0417",
+  "socioId": "S-001",
+  "ejemplares": [14, 15]
+}
+
+### 3. El mismo ejemplar otra vez -> 409 Conflict
+# El JSON es válido; lo que choca es el estado del sistema.
+POST http://localhost:3000/api/prestamos
+Content-Type: application/json
+
+{
+  "libroId": "LIB-0417",
+  "socioId": "S-002",
+  "ejemplares": [15, 16]
+}
+
+### 4. JSON que no cumple el contrato -> 400 con detalles
+POST http://localhost:3000/api/prestamos
+Content-Type: application/json
+
+{
+  "libroId": "",
+  "ejemplares": "muchos"
+}
+
+### 5. Falta el parámetro obligatorio -> 400
+GET http://localhost:3000/api/prestamos
+
+### 6. Ruta que no existe -> 404
+DELETE http://localhost:3000/api/otra-cosa
+
+### 7. Cliente HTML (también se puede abrir en el navegador)
+GET http://localhost:3000/

@@ -16,10 +16,10 @@ Desde la carpeta `practica04`:
 
 ```powershell
 npm install
-npm run servidor
+npm run dev
 ```
 
-El comando `servidor` compila el proyecto y ejecuta `dist/http/servidor.js`.
+El comando `dev` inicia la API con `tsx`. También se puede ejecutar `npm run servidor` para compilar e iniciar, o `npm run build` seguido de `npm start`.
 
 Abrir el cliente:
 
@@ -112,27 +112,23 @@ El servidor respondió 409 porque el ejemplar 15 ya estaba prestado. La solicitu
 
 ### Datos inválidos: 400
 
-Al dejar vacío el campo de ejemplares, el navegador bloqueó el envío por la validación HTML.
+La petición con `libroId` vacío, sin `socioId` y con `ejemplares: "muchos"` respondió 400 con los tres errores reunidos en `detalles`.
 
-Para comprobar la validación del servidor sin modificar el cliente, se envió una coma en ese campo. La API respondió 400 e indicó que los ejemplares deben ser números enteros positivos.
+## Peticiones de prueba
 
-### Varios errores en una petición
+El archivo `peticiones.http` contiene los siete casos proporcionados por el profesor. Con el servidor iniciado mediante `npm run dev`, abrir el archivo con REST Client y ejecutar los bloques en orden.
 
-Se envió directamente a la API:
+| Caso | Resultado esperado |
+|---|---|
+| Consulta inicial del libro | 200 y un arreglo vacío |
+| Creación del préstamo | 201 y cabecera Location |
+| Ejemplar repetido | 409 |
+| JSON que no cumple el contrato | 400 con detalles |
+| Falta libroId | 400 |
+| Ruta inexistente | 404 |
+| Página del cliente | 200 y contenido HTML |
 
-```json
-{
-  "libroId": "",
-  "socioId": "",
-  "ejemplares": []
-}
-```
-
-La respuesta fue 400 y reunió los tres errores dentro de `detalles`.
-
-### Consultas GET
-
-Se comprobó que la ausencia de `libroId` y su valor vacío producen 400. La consulta válida respondió 200 y devolvió únicamente el préstamo registrado, sin el campo interno.
+Reiniciar el servidor antes de repetir la secuencia completa para vaciar el repositorio en memoria.
 
 ## Preguntas de reflexión
 
@@ -170,3 +166,6 @@ Solo se tendría que desarrollar el cliente móvil para enviar las peticiones y 
 
 ### Verificación final
 ![Tipos, pruebas, compilación y auditoría](evidencias/05-verificacion-final.png)
+
+### Ruta inexistente
+![404 para una ruta no registrada](evidencias/06-ruta-inexistente-404.png)
