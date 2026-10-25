@@ -29,3 +29,7 @@
 ## Práctica 08 — Prisma: esquema y migraciones
 
 [Ver código, respuestas y evidencias](practica08/README.md)
+
+## Práctica 09 — Blindar la API
+
+[Ver código, respuestas y evidencias](practica09/README.md)

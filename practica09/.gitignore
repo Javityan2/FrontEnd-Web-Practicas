@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+.env
+.env.*
+!.env.example
+
+/src/generado/prisma/
+/.agents/
+/.claude/
+/.windsurf/
+/skills-lock.json

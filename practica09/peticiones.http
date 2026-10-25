@@ -1,0 +1,189 @@
+# Práctica 09 - API con MySQL, validación, filtro y CORS
+# Ejecutar con REST Client, en orden, después de npm run start:dev.
+# MySQL conserva los datos al reiniciar. Cada ejecución crea su propio horario.
+# Los ID se obtienen de las respuestas de las peticiones nombradas.
+
+@host = http://localhost:3000
+
+### 1. Listar clases: 200
+GET {{host}}/clases
+
+### 2. Crear clase: 201
+# @name clase
+POST {{host}}/clases
+Content-Type: application/json
+
+{ "nombre": "Clase de prueba" }
+
+### 3. Buscar clase: 200
+GET {{host}}/clases/{{clase.response.body.$.id}}
+
+### 4. Actualizar clase: 200
+PATCH {{host}}/clases/{{clase.response.body.$.id}}
+Content-Type: application/json
+
+{ "nombre": "Clase de prueba actualizada" }
+
+### 5. Crear horario con cupo dos: 201
+# @name horario
+POST {{host}}/horarios
+Content-Type: application/json
+
+{
+  "claseId": {{clase.response.body.$.id}},
+  "dia": "lunes",
+  "horaInicio": "07:00",
+  "cupoMaximo": 2,
+  "entrenador": "Ana Robles"
+}
+
+### 6. Consultar horarios: 200
+GET {{host}}/horarios
+
+### 7. Buscar horario: 200
+GET {{host}}/horarios/{{horario.response.body.$.id}}
+
+### 8. Actualizar horario: 200
+PATCH {{host}}/horarios/{{horario.response.body.$.id}}
+Content-Type: application/json
+
+{ "entrenador": "Luis Fierro" }
+
+### 9. Crear primer miembro: 201
+# @name miembroUno
+POST {{host}}/miembros
+Content-Type: application/json
+
+{ "nombre": "Ana Prueba", "correo": "ana.{{$guid}}@example.com", "membresia": "premium" }
+
+### 10. Crear segundo miembro: 201
+# @name miembroDos
+POST {{host}}/miembros
+Content-Type: application/json
+
+{ "nombre": "Luis Prueba", "correo": "luis.{{$guid}}@example.com", "membresia": "plus" }
+
+### 11. Crear tercer miembro: 201
+# @name miembroTres
+POST {{host}}/miembros
+Content-Type: application/json
+
+{ "nombre": "Sofia Prueba", "correo": "sofia.{{$guid}}@example.com", "membresia": "basica" }
+
+### 12. Listar miembros: 200
+GET {{host}}/miembros
+
+### 13. Buscar primer miembro: 200
+GET {{host}}/miembros/{{miembroUno.response.body.$.id}}
+
+### 14. Actualizar miembro: 200
+PATCH {{host}}/miembros/{{miembroUno.response.body.$.id}}
+Content-Type: application/json
+
+{ "nombre": "Ana Prueba Actualizada" }
+
+### 15. Primera inscripción: 201 y Location
+# @name primeraInscripcion
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": {{miembroUno.response.body.$.id}} }
+
+### 16. Duplicada: 409, con path y timestamp
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": {{miembroUno.response.body.$.id}} }
+
+### 17. Segunda inscripción: 201
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": {{miembroDos.response.body.$.id}} }
+
+### 18. Cupo lleno: 409
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": {{miembroTres.response.body.$.id}} }
+
+### 19. Consultar inscripciones: 200
+GET {{host}}/inscripciones
+
+### 20. Buscar inscripción: 200
+GET {{host}}/inscripciones/{{primeraInscripcion.response.body.$.id}}
+
+### 21. Cancelar primera inscripción: 200, estado cancelada
+DELETE {{host}}/inscripciones/{{primeraInscripcion.response.body.$.id}}
+
+### 22. Reintentar la solicitud rechazada por cupo: 201
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": {{miembroTres.response.body.$.id}} }
+
+### 23. Tipo inválido: 400 con mensajes de validación
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": "hola", "miembroId": 1 }
+
+### 24. Campo adicional: 400
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": 1, "miembroId": 1, "campoExtra": "prueba" }
+
+### 25. Correo inválido: 400
+POST {{host}}/miembros
+Content-Type: application/json
+
+{ "nombre": "Prueba", "correo": "no-es-correo", "membresia": "basica" }
+
+### 26. Membresía inválida: 400
+POST {{host}}/miembros
+Content-Type: application/json
+
+{ "nombre": "Prueba", "correo": "prueba@example.com", "membresia": "inexistente" }
+
+### 27. Horario inexistente: 404 del filtro
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": 2147483647, "miembroId": {{miembroUno.response.body.$.id}} }
+
+### 28. Miembro inexistente: 404 del filtro
+POST {{host}}/inscripciones
+Content-Type: application/json
+
+{ "horarioId": {{horario.response.body.$.id}}, "miembroId": 2147483647 }
+
+### 29. CORS: primer origen permitido
+GET {{host}}/clases
+Origin: http://localhost:5173
+
+### 30. CORS: segundo origen permitido
+GET {{host}}/clases
+Origin: http://127.0.0.1:5173
+
+### 31. CORS: origen no permitido, sin Access-Control-Allow-Origin
+GET {{host}}/clases
+Origin: http://localhost:9999
+
+# Limpieza opcional: elimina SOLO los registros creados en esta ejecución.
+# Eliminar el horario también elimina sus inscripciones por onDelete: Cascade.
+
+### 32. Eliminar horario de prueba: 200
+DELETE {{host}}/horarios/{{horario.response.body.$.id}}
+
+### 33. Eliminar primer miembro de prueba: 200
+DELETE {{host}}/miembros/{{miembroUno.response.body.$.id}}
+
+### 34. Eliminar segundo miembro de prueba: 200
+DELETE {{host}}/miembros/{{miembroDos.response.body.$.id}}
+
+### 35. Eliminar tercer miembro de prueba: 200
+DELETE {{host}}/miembros/{{miembroTres.response.body.$.id}}
+
+### 36. Eliminar clase de prueba: 200
+DELETE {{host}}/clases/{{clase.response.body.$.id}}
