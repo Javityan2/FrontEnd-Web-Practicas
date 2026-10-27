@@ -50,3 +50,7 @@
 
 [Ver código, respuestas y evidencias](practica13/README.md)
 
+## Práctica 14 — La tienda contra su API
+
+[Ver código, respuestas y evidencias](practica14/README.md)
+

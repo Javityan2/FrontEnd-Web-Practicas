@@ -1,0 +1,26 @@
+### Todos los productos
+GET http://localhost:3000/productos
+
+### Sólo una categoría
+GET http://localhost:3000/productos?categoria=calzado
+
+### Uno
+GET http://localhost:3000/productos/P-001
+
+### Pedido (pago simulado): 201 con { folio, total }
+POST http://localhost:3000/pedidos
+Content-Type: application/json
+
+{ "correo": "karla@itson.edu.mx", "telefono": "6441234567", "productos": ["P-001", "P-001", "P-005"] }
+
+### 400: correo y teléfono mal, carrito vacío
+POST http://localhost:3000/pedidos
+Content-Type: application/json
+
+{ "correo": "karla", "telefono": "644", "productos": [] }
+
+### 409: producto agotado
+POST http://localhost:3000/pedidos
+Content-Type: application/json
+
+{ "correo": "karla@itson.edu.mx", "telefono": "6441234567", "productos": ["P-009"] }

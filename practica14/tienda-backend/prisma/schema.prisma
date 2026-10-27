@@ -1,0 +1,52 @@
+// api-tienda — el esquema de la tienda de las Prácticas 12B y 13.
+// Mismo estilo que el gimnasio de la Unidad II: Prisma 7 + MySQL.
+
+generator client {
+  // En Prisma 7 el cliente se genera dentro de src/, no en node_modules.
+  provider     = "prisma-client"
+  output       = "../src/generado/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Producto {
+  id         String @id @db.VarChar(10)   // "P-001": el mismo id de la Práctica 11
+  nombre     String @db.VarChar(80)
+  precio     Int                          // en pesos, sin centavos: así viaja como número en el JSON
+  categoria  String @db.VarChar(30)
+  imagen     String @db.VarChar(120)      // ruta de la imagen en el frontend: /img/producto-01.jpg
+  existencia Int
+
+  renglones RenglonPedido[]
+
+  @@map("productos")
+}
+
+model Pedido {
+  id       Int      @id @default(autoincrement())
+  correo   String   @db.VarChar(120)
+  telefono String   @db.VarChar(10)
+  total    Int
+  creadoEn DateTime @default(now())
+
+  renglones RenglonPedido[]
+
+  @@map("pedidos")
+}
+
+// Un renglón = un producto dentro de un pedido, con su cantidad y el precio de ese momento.
+model RenglonPedido {
+  id         Int    @id @default(autoincrement())
+  pedidoId   Int
+  productoId String @db.VarChar(10)
+  cantidad   Int
+  precio     Int
+
+  pedido   Pedido   @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  producto Producto @relation(fields: [productoId], references: [id])
+
+  @@map("renglones_pedido")
+}
