@@ -54,3 +54,7 @@
 
 [Ver código, respuestas y evidencias](practica14/README.md)
 
+## Práctica 15 — El Gimnasio, Rutas y Layout
+
+[Ver código, respuestas y evidencias](practica15/README.md)
+

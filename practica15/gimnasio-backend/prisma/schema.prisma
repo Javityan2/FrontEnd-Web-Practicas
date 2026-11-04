@@ -1,0 +1,84 @@
+generator client {
+  // En Prisma 7 el generador se llama "prisma-client" y el `output`
+  // es obligatorio: el cliente se genera dentro de src/, no dentro
+  // de node_modules.
+  provider = "prisma-client"
+  output   = "../src/generado/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Clase {
+  id          Int    @id @default(autoincrement())
+  nombre      String @db.VarChar(80)
+  // Lo que muestra el frontend.
+  categoria   String @db.VarChar(20)   // fuerza, cardio o flexibilidad
+  descripcion String @db.VarChar(255)
+  duracionMin Int
+  imagen      String @db.VarChar(120)  // ruta que sirve esta misma API: /img/clase-01.jpg
+
+  horarios Horario[]
+
+  @@map("clases")
+}
+
+model Horario {
+  id         Int    @id @default(autoincrement())
+  claseId    Int
+  dia        String @db.VarChar(20)
+  horaInicio String @db.VarChar(5)
+  cupoMaximo Int
+  entrenador String @db.VarChar(80)
+
+  clase         Clase         @relation(fields: [claseId], references: [id], onDelete: Cascade)
+  inscripciones Inscripcion[]
+
+  @@index([claseId])
+  @@map("horarios")
+}
+
+model Miembro {
+  id        Int     @id @default(autoincrement())
+  nombre    String  @db.VarChar(120)
+  correo    String  @unique @db.VarChar(160)
+  membresia String  @db.VarChar(20)
+  activo    Boolean @default(true)
+
+  inscripciones Inscripcion[]
+
+  @@map("miembros")
+}
+
+model Inscripcion {
+  id        Int      @id @default(autoincrement())
+  horarioId Int
+  miembroId Int
+  estado    String   @default("confirmada") @db.VarChar(20)
+  creadaEn  DateTime @default(now())
+
+  horario Horario @relation(fields: [horarioId], references: [id], onDelete: Cascade)
+  miembro Miembro @relation(fields: [miembroId], references: [id], onDelete: Cascade)
+
+  // Regla 1 (no duplicada), ahora tambien a nivel de base de datos.
+  @@unique([horarioId, miembroId])
+  @@index([miembroId])
+  @@map("inscripciones")
+}
+
+// Quien inicia sesion.
+// rol va como texto para que el repositorio devuelva el mismo Rol del
+// dominio sin traducir entre dos enums.
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  correo       String   @unique @db.VarChar(160)
+  nombre       String   @db.VarChar(120) // para el saludo del encabezado
+  passwordHash String   @db.VarChar(72)
+  rol          String   @default("miembro") @db.VarChar(20)
+  miembroId    Int?
+  creadoEn     DateTime @default(now())
+
+  @@map("usuarios")
+}
