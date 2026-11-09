@@ -58,3 +58,7 @@
 
 [Ver código, respuestas y evidencias](practica15/README.md)
 
+## Práctica 16 — El gimnasio con contexto de sesión y JWT
+
+[Ver código, respuestas y evidencias](practica16/README.md)
+
