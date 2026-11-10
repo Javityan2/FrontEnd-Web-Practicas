@@ -62,3 +62,7 @@
 
 [Ver código, respuestas y evidencias](practica16/README.md)
 
+## Práctica 17 — Rutas protegidas e inscripciones
+
+[Ver código, respuestas y evidencias](practica17/README.md)
+
