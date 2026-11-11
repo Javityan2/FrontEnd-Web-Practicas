@@ -66,3 +66,7 @@
 
 [Ver código, respuestas y evidencias](practica17/README.md)
 
+## Práctica 18 — Lazy loading, build y Zustand
+
+[Ver código, respuestas y evidencias](practica18/README.md)
+
