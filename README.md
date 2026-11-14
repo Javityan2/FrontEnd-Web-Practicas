@@ -70,3 +70,7 @@
 
 [Ver código, respuestas y evidencias](practica18/README.md)
 
+## Práctica 19 — El tablero del gimnasio en Angular
+
+[Ver código, respuestas y evidencias](practica19/README.md)
+

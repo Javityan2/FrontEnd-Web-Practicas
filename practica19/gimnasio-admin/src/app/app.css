@@ -1,0 +1,22 @@
+:host {
+  --ancho-tablero: 100rem;
+  --margen-lateral: clamp(1rem, 2vw, 2rem);
+}
+
+.pagina,
+.barra__interior {
+  max-width: var(--ancho-tablero);
+  padding-inline: var(--margen-lateral);
+}
+
+.rejilla {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+}
+
+.resumen {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+
+.vacio {
+  grid-column: 1 / -1;
+}

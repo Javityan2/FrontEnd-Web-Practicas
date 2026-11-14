@@ -1,0 +1,44 @@
+<header class="barra">
+  <div class="barra__interior">
+    <span class="barra__marca">
+      <img src="/logo.svg" alt="" /> Gimnasio Titanes
+      <span class="barra__etiqueta">Admin</span>
+    </span>
+  </div>
+</header>
+
+<main class="pagina">
+  <div class="encabezado">
+    <div>
+      <h1>Catálogo de clases</h1>
+      <p>Datos locales · Práctica 19</p>
+    </div>
+    <div class="acciones">
+      <button class="boton boton--secundario" (click)="vaciar()">Vaciar</button>
+      <button class="boton" (click)="restaurar()">Restaurar</button>
+    </div>
+  </div>
+
+  <section class="resumen">
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ clases.length }}</span>
+      <span class="resumen__texto">clases en el catálogo</span>
+    </div>
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ minutosTotales }}</span>
+      <span class="resumen__texto">minutos a la semana</span>
+    </div>
+    <div class="resumen__dato">
+      <span class="resumen__numero">{{ clasesLargas }}</span>
+      <span class="resumen__texto">clases de una hora o más</span>
+    </div>
+  </section>
+
+  <div class="rejilla">
+    @for (clase of clases; track clase.id) {
+      <app-tarjeta-clase [clase]="clase" />
+    } @empty {
+      <p class="vacio">No hay clases en el catálogo.</p>
+    }
+  </div>
+</main>
