@@ -74,3 +74,7 @@
 
 [Ver código, respuestas y evidencias](practica19/README.md)
 
+## Práctica 20 — Signals, servicios e inyección
+
+[Ver código, respuestas y evidencias](practica20/README.md)
+
