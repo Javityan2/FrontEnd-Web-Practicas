@@ -1,0 +1,83 @@
+<a routerLink="/clases">← Cancelar</a>
+
+<h1 style="margin-top: 0.8rem">Nueva clase</h1>
+
+<form class="tarjeta formulario" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <div class="campo">
+    <label for="nombre">Nombre</label>
+
+    <input id="nombre" formControlName="nombre" />
+    
+    @if (f.nombre.touched && f.nombre.hasError('required')) {
+      <span class="error">El nombre es obligatorio.</span>
+    }
+    @if (f.nombre.touched && f.nombre.hasError('maxlength')) {
+      <span class="error">Máximo 80 caracteres.</span>
+    }
+  </div>
+
+  <div class="fila">
+    <div class="campo">
+      <label for="categoria">Categoría</label>
+      <select id="categoria" formControlName="categoria">
+        @for (c of categorias; track c) {
+          <option [value]="c">{{ c }}</option>
+        }
+      </select>
+      @if (f.categoria.touched && f.categoria.hasError('required')) {
+        <span class="error">Elige una categoría.</span>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="duracionMin">Duración (minutos)</label>
+      <input id="duracionMin" type="number" formControlName="duracionMin" />
+      @if (f.duracionMin.touched && f.duracionMin.hasError('required')) {
+        <span class="error">Escribe la duración.</span>
+      }
+      @if (f.duracionMin.touched && f.duracionMin.hasError('min')) {
+        <span class="error">La duración mínima es de 10 minutos.</span>
+      }
+
+      @if (f.duracionMin.touched && f.duracionMin.hasError('multiploDe')) {
+        <span class="error">La duración va en bloques de 5 minutos (45, 50, 55…).</span>
+      }
+    </div>
+  </div>
+
+  <div class="campo">
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" rows="3" formControlName="descripcion"></textarea>
+    <span class="contador">{{ f.descripcion.value.length }} / 255</span>
+    @if (f.descripcion.touched && f.descripcion.hasError('required')) {
+      <span class="error">La descripción es obligatoria.</span>
+    }
+    @if (f.descripcion.touched && f.descripcion.hasError('maxlength')) {
+      <span class="error">Máximo 255 caracteres.</span>
+    }
+  </div>
+
+  <div class="campo">
+    <label for="imagen">Imagen</label>
+    <select id="imagen" formControlName="imagen">
+      @for (img of imagenes; track img) {
+        <option [value]="img">{{ img }}</option>
+      }
+    </select>
+    @if (f.imagen.touched && f.imagen.hasError('required')) {
+      <span class="error">Elige una imagen.</span>
+    }
+    <img class="vista-previa" [src]="apiUrl + f.imagen.value" alt="Imagen elegida para la clase" />
+  </div>
+
+  <div class="acciones">
+    <button class="boton" type="submit">Guardar</button>
+  </div>
+</form>
+
+@if (listo(); as datos) {
+  <div class="aviso" style="margin-top: 1rem">
+    El formulario es válido. Esto se mandaría a la API:
+    <pre>{{ datos | json }}</pre>
+  </div>
+}

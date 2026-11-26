@@ -78,3 +78,7 @@
 
 [Ver código, respuestas y evidencias](practica20/README.md)
 
+## Práctica 21 — Rutas, formulario y catálogo desde la API
+
+[Ver código, respuestas y evidencias](practica21/README.md)
+
